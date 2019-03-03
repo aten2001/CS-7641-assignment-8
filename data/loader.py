@@ -240,7 +240,7 @@ class DataLoader(ABC):
             logger.info(msg.format(*args))
 
 
-class Spam(DataLoader):
+class SpamData(DataLoader):
     def __init__(self, path="data/DATA_spam/spambase.data", verbose=False, seed=1):
         super().__init__(path, verbose, seed)
 
@@ -309,66 +309,16 @@ class Spam(DataLoader):
         self._data = emails
 
     def class_column_name(self):
-        return "spam"
+        return "57"
 
     def data_name(self):
-        return "spam"
+        return "SpamData"
 
     def _preprocess_data(self):
         pass
 
     def pre_training_adjustment(self, train_features, train_classes):
         return train_features, train_classes
-
-
-# class Poker(DataLoader):
-#     def __init__(
-#         self,
-#         path="data/DATA_poker/poker-hand-training-true.data",
-#         verbose=False,
-#         seed=1,
-#     ):
-#         super().__init__(path, verbose, seed)
-
-#     def _load_data(self):
-#         labels = []
-#         for i in range(1, 6):
-#             labels.append("S" + str(i))
-#             labels.append("C" + str(i))
-#         labels.append("hand")
-#         hands = pd.read_csv(self._path, sep=",", header=None, names=labels)
-#         handsY = (hands["hand"] > 0).astype(int)
-#         handsX = hands.drop("hand", 1)
-#         hands = pd.concat([handsX, handsY], axis=1)
-
-#         self._data = hands
-
-#     def class_column_name(self):
-#         return "poker"
-
-#     def data_name(self):
-#         return "poker"
-
-#     def _preprocess_data(self):
-#         pass
-#         # for col in self._data.columns.values:
-#         #     if self._data[col].dtypes == "object":
-#         #         col_count = self._data[col].value_counts()
-#         #         print(col_count)
-#         #         # sns.barplot(col_count.index, col_count.values, alpha=0.8)
-#         #         # plt.title(col)
-#         #         # plt.show()
-
-#         # # Encode labels
-#         # le = LabelEncoder()
-#         # for col in self._data.columns.values:
-#         #     if self._data[col].dtypes == "object":
-#         #         data = self._data[col]
-#         #         le.fit(data.values)
-#         #         self._data[col] = le.transform(self._data[col])
-
-#     def pre_training_adjustment(self, train_features, train_classes):
-#         return train_features, train_classes
 
 
 class PoisonousMushrooms(DataLoader):
@@ -418,91 +368,7 @@ class PoisonousMushrooms(DataLoader):
 
 
 if __name__ == "__main__":
-    cd_data = PoisonousMushrooms(verbose=True)
-    cd_data.load_and_process()
+    # cd_data = PoisonousMushrooms(verbose=True)
+    # cd_data.load_and_process()
     cd_data = Spam(verbose=True)
     cd_data.load_and_process()
-
-"""
-Legacy stuff for reference
-"""
-
-
-# class BankMarketingData(DataLoader):
-#     def __init__(
-#         self, path="data/dataset1/bank-additional-full.csv", verbose=False, seed=1
-#     ):
-#         super().__init__(path, verbose, seed)
-
-#     def _load_data(self):
-#         self._data = pd.read_csv(self._path, sep=";")
-
-#     def class_column_name(self):
-#         return "y"
-
-#     def data_name(self):
-#         return "Bank Marketing"
-
-#     def _preprocess_data(self):
-#         for col in self._data.columns.values:
-#             if self._data[col].dtypes == "object":
-#                 col_count = self._data[col].value_counts()
-#                 print(col_count)
-#                 # sns.barplot(col_count.index, col_count.values, alpha=0.8)
-#                 # plt.title(col)
-#                 # plt.show()
-
-#         self._data.drop(
-#             columns=["contact", "default", "month", "day_of_week"], axis=1, inplace=True
-#         )
-
-#         self._data.replace("unknown", pd.np.nan, inplace=True)
-#         self._data.dropna(axis=0, inplace=True)
-#         # Encode labels
-#         le = LabelEncoder()
-#         for col in self._data.columns.values:
-#             if self._data[col].dtypes == "object":
-#                 data = self._data[col]
-#                 le.fit(data.values)
-#                 self._data[col] = le.transform(self._data[col])
-
-#     def pre_training_adjustment(self, train_features, train_classes):
-#         return train_features, train_classes
-
-
-# class AdultSalary(DataLoader):
-#     def __init__(self, path="data/dataset2/adult.data.txt", verbose=False, seed=1):
-#         super().__init__(path, verbose, seed)
-
-#     def _load_data(self):
-#         self._data = pd.read_csv(self._path, sep=",", header=None)
-
-#     def class_column_name(self):
-#         return "14"
-
-#     def data_name(self):
-#         return "Adult Salary"
-
-#     def _preprocess_data(self):
-#         for col in self._data.columns.values:
-#             if self._data[col].dtypes == "object":
-#                 col_count = self._data[col].value_counts()
-#                 print(col_count)
-#                 # sns.barplot(col_count.index, col_count.values, alpha=0.8)
-#                 # plt.title(col)
-#                 # plt.show()
-
-#         # self._data.drop(columns=["contact", "default", "month", "day_of_week"], axis=1, inplace=True)
-
-#         self._data.replace(" ?", pd.np.nan, inplace=True)
-#         self._data.dropna(axis=0, inplace=True)
-#         # Encode labels
-#         le = LabelEncoder()
-#         for col in self._data.columns.values:
-#             if self._data[col].dtypes == "object":
-#                 data = self._data[col]
-#                 le.fit(data.values)
-#                 self._data[col] = le.transform(self._data[col])
-
-#     def pre_training_adjustment(self, train_features, train_classes):
-#         return train_features, train_classes
